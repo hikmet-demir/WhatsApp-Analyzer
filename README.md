@@ -23,3 +23,6 @@ Obviously, App needs your chat history. You can send your chat history and app w
   
 We are building WP-Analyzer in python! You are more welcome to develope functions / add new ones. 
   
+
+### Setup
+`pip install -r requirements.txt`
