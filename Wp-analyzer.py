@@ -18,6 +18,9 @@ class WhatsAppAnalyzer:
 
         self.file_name_input = input("Enter your file name example ( trial.txt) : " ) 
         print()
+
+        self.device = input("press 1 for android / press 2 for ios: ")
+        print()
         
         with open(self.file_name_input,'r', encoding = "utf8") as f:
             self.read_data = f.read()
@@ -28,14 +31,26 @@ class WhatsAppAnalyzer:
 
 
     def merge_real_line(self):
-        merge_lines = []
-        for j in self.input_lines:
-            if ('/') in j[0:10] and ',' in j[0:10]:
-                merge_lines.append(j)
-            else:
-                merge_lines[-1] = merge_lines[-1] + " " + j
-        
-        self.input_lines = merge_lines
+
+        if(self.device == '2'):
+            merge_lines = []
+            for j in self.input_lines:
+                if ('.') in j[0:10] and ':' in j[0:20]:
+                    merge_lines.append(j)
+                else:
+                    merge_lines[-1] = merge_lines[-1] + " " + j
+            
+            self.input_lines = merge_lines
+
+        else:
+            merge_lines = []
+            for j in self.input_lines:
+                if ('/') in j[0:10] and ',' in j[0:10]:
+                    merge_lines.append(j)
+                else:
+                    merge_lines[-1] = merge_lines[-1] + " " + j
+            
+            self.input_lines = merge_lines
 
 
     def Merge_lines_func(self):
@@ -44,30 +59,58 @@ class WhatsAppAnalyzer:
         #    print(i)
         #    print("-")
         
-        for line in self.input_lines:
-            if ':' in line:
-                temp_message = {}
-                temp_date = line.split('-')[0]
-                try:
-                    date = parse(temp_date)
-                    temp_message['date'] = date.date()
-                    temp_message['time'] = date.time()
-                    temp_message['minute'] = date.minute
-                    temp_message['hour'] = date.hour
-                    temp_message['day'] = date.day
-                    temp_message['month'] = date.month
-                    temp_message['year'] = date.year
+        if(self.device == '2'):
+            for line in self.input_lines:
+                if line.count(":") > 2:
+                    temp_message = {}
+                    in1 = line.find("[")
+                    in2 = line.find("]")
+                    temp_date = line[in1+1:in2]
+                    try:
+                        date = parse(temp_date)
+                        temp_message['date'] = date.date()
+                        temp_message['time'] = date.time()
+                        temp_message['minute'] = date.minute
+                        temp_message['hour'] = date.hour
+                        temp_message['day'] = date.day
+                        temp_message['month'] = date.month
+                        temp_message['year'] = date.year
 
-                    index1 = line.find(" - ")
-                    index2 = line.find(": ")
-                    person = line[index1+3:index2]
-                    temp_message['person'] = person
+                        index1 = line.find("] ")
+                        index2 = line.find(": ")
+                        person = line[index1+2:index2]
+                        temp_message['person'] = person
 
-                    message = line[index2+2:]
-                    temp_message['message'] = message
-                    self.messages.append(temp_message)
-                except:
-                    print(temp_date)
+                        message = line[index2+2:]
+                        temp_message['message'] = message
+                        self.messages.append(temp_message)
+                    except:
+                        print(temp_date)
+        else:
+            for line in self.input_lines:
+                if ':' in line:
+                    temp_message = {}
+                    temp_date = line.split('-')[0]
+                    try:
+                        date = parse(temp_date)
+                        temp_message['date'] = date.date()
+                        temp_message['time'] = date.time()
+                        temp_message['minute'] = date.minute
+                        temp_message['hour'] = date.hour
+                        temp_message['day'] = date.day
+                        temp_message['month'] = date.month
+                        temp_message['year'] = date.year
+
+                        index1 = line.find(" - ")
+                        index2 = line.find(": ")
+                        person = line[index1+3:index2]
+                        temp_message['person'] = person
+
+                        message = line[index2+2:]
+                        temp_message['message'] = message
+                        self.messages.append(temp_message)
+                    except:
+                        print(temp_date)
 
 
     def find_message_counts(self):
@@ -109,11 +152,13 @@ class WhatsAppAnalyzer:
         t.sort(reverse=True)
         counter = 0
         for person in t:
-             print( "kişi adı: " +person[2]+ " message sayısı === " + str(person[0]) + "//// Night owl count == " + str(person[1]))
-             print()
-             counter +=1
-             if counter >10:
-                 break
+            print(person[2])
+            print("Message Count = " + str(person[0]))
+            print("Night owl Count = " + str(person[1]))
+            print()
+            counter +=1
+            if counter >10:
+                break
   
 
         print("----")
