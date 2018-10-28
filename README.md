@@ -15,7 +15,7 @@ It can give some insights about your groups such as:
     
   - Do you prefer big texts or just words?
   
-##Prerequisities
+## Prerequisities
 
 - Python 3
 
