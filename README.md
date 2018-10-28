@@ -9,11 +9,11 @@ It can give some insights about your groups such as:
   
 - What is your group dynamics?
   
-- - When you are talking?( mornings / evenings ??)
+  - When you are talking?( mornings / evenings ??)
     
-- - Which words you are using quite often?(dude / bitcoin / assignment / omg ?)
+  - Which words you are using quite often?(dude / bitcoin / assignment / omg ?)
     
-- - Do you prefer big texts or just words?
+  - Do you prefer big texts or just words?
   
 ##Prerequisities
 
